@@ -1,3 +1,4 @@
+const Hotel = require('../models/hotel')
 const Item = require('../models/menu-item')
 const User = require('../models/user')
 
@@ -36,6 +37,12 @@ exports.addMenuItem = async (req, res, next) => {
         if(user.status !== 'admin') {
             const error = new Error('You don\'t have admin privileges')
             error.statusCode = 404
+            throw error
+        }
+        const hotel = await Hotel.findById(hotelId)
+        if(!hotel) {
+            const error = new Error('Hotel doesn\'t exist')
+            error.statusCode = 401
             throw error
         }
         const result = await menuItem.save()

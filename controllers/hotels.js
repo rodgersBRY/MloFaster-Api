@@ -5,9 +5,15 @@ const Item = require('../models/menu-item')
 exports.getHotels = async (req, res, next) => {
     try {
         const hotels = await Hotel.find()
-        res.status(200).json({
-            hotels: hotels
-        })
+        if(hotels.length > 0) {
+            res.status(200).json({
+                hotels: hotels
+            })
+        } else {
+            res.status(200).json({
+                message: 'There are no hotels yet'
+            })
+        }
     } catch(err) {
         if(!err.statusCode) {
             err.statusCode = 500
@@ -45,7 +51,6 @@ exports.addHotel = async (req, res, next) => {
         })
         const result = await hotel.save()
         res.status(201).json({
-            message: 'Hotel has been added',
             hotel: result
         })
     } catch(err) {
@@ -102,7 +107,6 @@ exports.updateHotel = async (req, res, next) => {
 
         const result = await hotel.save()
         res.status(200).json({
-            message: 'Hotel updated',
             hotel: result
         })
     } catch (err) {
@@ -124,7 +128,14 @@ exports.removeHotel = async (req, res, next) => {
             error.statusCode = 404
             throw error
         }
-        await Hotel.findByIdAndRemove(hotelId)
+        const hotel = await Hotel.findById(hotelId)
+        if(!hotel) {
+            const error = new Error('Delete operation not possible!')
+            error.statusCode = 404
+            throw error
+        }
+        await hotel.remove()
+        await Item.find({ hotelId: hotelId }).remove()
         res.status(200).json({ message: 'Hotel removed from database'})
     } catch(err) {
         if(!err.statusCode) {

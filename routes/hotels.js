@@ -7,12 +7,12 @@ const router = express.Router()
 
 router.get('/', hotelController.getHotels)
 
-router.post('/add-hotel', isAuth, hotelController.addHotel)
+router.post('/add', isAuth, hotelController.addHotel)
 
 router.get('/hotel/:hotelId', isAuth, hotelController.getHotel)
 
 router.put('/hotel/:hotelId', isAuth, hotelController.updateHotel)
 
-router.delete('/hotel/:hotelId', isAuth, hotelController.removeHotel)
+router.delete('/delete/:hotelId', isAuth, hotelController.removeHotel)
 
 module.exports = router

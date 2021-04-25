@@ -27,6 +27,7 @@ const userSchema = new Schema({
         items: [
             {
                 itemId: {type: Schema.Types.ObjectId, ref: 'MenuItem', required: true},
+                price: { type: Number, required: true },
                 quantity: {type: Number, required: true}
             }
         ]
