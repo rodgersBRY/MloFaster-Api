@@ -12,6 +12,7 @@ const authRoutes = require('./routes/auth')
 const hotelRoutes = require('./routes/hotels')
 const imageRoutes = require('./routes/multer')
 const menuRoutes = require('./routes/menuItems')
+const cartRoutes = require('./routes/cart')
 
 const app = express()
 
@@ -32,6 +33,7 @@ app.use('/auth', authRoutes)
 app.use('/hotels', hotelRoutes)
 app.use('/images', imageRoutes)
 app.use('/menu-items', menuRoutes)
+app.use('/cart', cartRoutes)
 
 app.use((req, res, next) => {
     if(!req.userId) {

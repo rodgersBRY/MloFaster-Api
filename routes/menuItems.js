@@ -13,8 +13,6 @@ router.put('/menu-item/:itemId', isAuth, menuController.updateMenuItem)
 
 router.delete('/menu-item/:itemId', isAuth, menuController.deleteMenuItem)
 
-router.post('/add-to-cart/:itemId', isAuth, menuController.addItemToCart)
-
 // router.get('/cart', menuController.getCart)
 
 module.exports = router
