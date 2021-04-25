@@ -35,23 +35,6 @@ app.use('/images', imageRoutes)
 app.use('/menu-items', menuRoutes)
 app.use('/cart', cartRoutes)
 
-app.use((req, res, next) => {
-    if(!req.userId) {
-      return next()
-    }
-    User.findById(req.userId)
-    .then(user => {
-      if(!user) {
-        return next()
-      }
-      req.user = user
-      next()
-    })
-    .catch(err => {
-      throw new Error(err)
-    })
-  })
-
 // error handling middleware
 app.use((error, req, res, next) => {
     console.log(error)
