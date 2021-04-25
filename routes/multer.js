@@ -8,31 +8,47 @@ const isAuth = require('../middleware/auth-guard')
 
 const app = express()
 
+const router = express.Router()
+
+app.use('/uploads', express.static(__dirname +'/uploads'))
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads/')
     },
     filename: (req, file, cb) => {
-        cb(null, file.filename + '-' + Date.now())
+        cb(null, Date.now().toString() + ' - ' + file.originalname)
     }
 })
 
-const upload = multer({ storage: storage })
-
-const router = express.Router()
-
-router.post('/add-image', upload.single('image'), async (req, res, next) => {
-    var obj = {
-        img: {
-            data: fs.readFileSync(path.join(__dirname, '../uploads/', req.file.filename)),
-            contentType: 'image/jpg'
-        }
+const filter = (req, file, cb) => {
+    if (
+        file.mimetype.split('/')[1] === "jpeg" || 
+        file.mimetype.split('/')[1] === 'jpg' || 
+        file.mimetype.split('/')[1] === 'png'
+    ) {
+      cb(null, true)
+    } else {
+      cb(new Error("Not an image file"), false)
     }
+  };
+
+const upload = multer({ storage: storage, fileFilter: filter })
+
+router.post('/add', isAuth, upload.single('image'), async (req, res, next) => {
+    const imageFile = req.file
+    if(!imageFile) {
+        const error = new Error('Please upload a file')
+        error.statusCode = 400
+        throw error
+    }
+    const image = new Image({
+        image: imageFile.path
+    })
     try {
-        const item = await Image.create(obj)
-        await item.save()
-        res.status(200).json({ result: item })
-    }catch(err) {
+        const savedImage = await image.save()
+        res.status(200).json({ result: savedImage })
+    } catch(err) {
         if(!err.statusCode) {
             err.statusCode = 500
         }
