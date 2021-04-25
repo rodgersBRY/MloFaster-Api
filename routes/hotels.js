@@ -1,5 +1,4 @@
 const express = require('express')
-// const { body } = require('express-validator')
 
 const hotelController = require('../controllers/hotels')
 const isAuth = require('../middleware/auth-guard')

@@ -27,6 +27,5 @@ module.exports = (req, res, next) => {
 
     // store the userId inside the request
     req.userId = decodedToken.userId
-    req.status = decodedToken.status
     next()
 }

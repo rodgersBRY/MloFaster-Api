@@ -132,3 +132,4 @@ exports.removeHotel = async (req, res, next) => {
         next(err)
     }
 }
+

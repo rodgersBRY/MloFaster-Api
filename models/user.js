@@ -23,6 +23,27 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    cart: {
+        items: [
+            {
+                itemId: {type: Schema.Types.ObjectId, ref: 'MenuItem', required: true},
+                quantity: {type: Number, required: true}
+            }
+        ]
+    }
 })
+
+userSchema.methods.removeFromCart = itemId => {
+    const updatedCartItems = this.cart.items.filter(item => {
+        return item.itemId.toString() !== itemId.toString()
+    })
+    this.cart.items = updatedCartItems
+    return this.save()
+}
+
+userSchema.methods.clearCart = () => {
+    this.cart = {items: []}
+    return this.save()
+}
 
 module.exports = mongoose.model('User', userSchema)

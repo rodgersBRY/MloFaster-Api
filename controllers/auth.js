@@ -22,7 +22,8 @@ exports.register = async (req, res, next) => {
             email: email,
             status: status,
             phoneNo: '+254 ' + phoneNo,
-            password: hashedPw
+            password: hashedPw,
+            cart: { items: []}
         })
         const result = await user.save()
         res.status(201).json({
@@ -61,7 +62,6 @@ exports.login = async (req, res, next) => {
         const token = jwt.sign(
             {
                 email: loadedUser.email,
-                status: loadedUser.status,
                 userId: loadedUser._id.toString()
             }, 
             secret.SECRET, 
@@ -69,7 +69,6 @@ exports.login = async (req, res, next) => {
         )
         res.status(200).json({
             userId: loadedUser._id.toString(),
-            status: loadedUser.status,
             token: token
         })
     } catch(err) {
