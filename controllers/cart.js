@@ -23,7 +23,7 @@ exports.addItemToCart = async (req, res, next) => {
 
     try {
         const user = await User.findById(req.userId)
-        let item = await Item.findById(itemId) 
+        let item = await Item.findById(itemId)
 
         const cartItemIndex = user.cart.items.findIndex(cp => {
             return cp.itemId.toString() === item._id.toString()

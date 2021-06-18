@@ -2,9 +2,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator') // input validator
 
+require('dotenv/config')
+
 // import user model
 const User = require('../models/user')
-const secret = require('../.env/index')
+
 
 exports.register = async (req, res, next) => {
     // TODO: validate the inputs first thing
@@ -64,11 +66,12 @@ exports.login = async (req, res, next) => {
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, 
-            secret.SECRET, 
+            process.env.SECRET, 
             { expiresIn: '1h' }
         )
         res.status(200).json({
             userId: loadedUser._id.toString(),
+            user: loadedUser,
             token: token
         })
     } catch(err) {

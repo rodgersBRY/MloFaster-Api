@@ -23,19 +23,13 @@ exports.getHotels = async (req, res, next) => {
 }
 
 exports.addHotel = async (req, res, next) => {
+    // const image  = req.file
     const name = req.body.name
     const email = req.body.email
     const desc = req.body.description
     const phoneNo = req.body.phoneNo
-
+    
     try {
-        // check for admin privileges
-        const user = await User.findById(req.userId)
-        if(user.status !== 'admin') {
-            const error = new Error('You don\'t have admin privileges')
-            error.statusCode = 404
-            throw error
-        }
         const hotelExists = await Hotel.findOne({email: email})
         if(hotelExists) {
             const error = new Error('There is a hotel with the same E-Mail')
@@ -46,7 +40,9 @@ exports.addHotel = async (req, res, next) => {
         const hotel = new Hotel({
             name: name,
             email: email,
+            // imageUrl: image,
             description: desc,
+            userId: req.userId,
             phoneNo: '+254 ' + phoneNo
         })
         const result = await hotel.save()
@@ -61,26 +57,26 @@ exports.addHotel = async (req, res, next) => {
     }
 }
 
-exports.getHotel = async (req, res, next) => {
-    const hotelId = req.params.hotelId
+// exports.getHotel = async (req, res, next) => {
+//     const hotelId = req.params.hotelId
 
-    try {
-        const hotel = await Hotel.findById(hotelId)
-        if(!hotel) {
-            const error = new Error('The hotel might have been deleted')
-            error.statusCode = 401
-            throw error
-        }
-        res.status(201).json({
-            hotel: hotel
-        })
-    } catch(err) {
-        if(!err.statusCode) {
-            err.statusCode = 500
-        }
-        next(err)
-    }
-}
+//     try {
+//         const hotel = await Hotel.findById(hotelId)
+//         if(!hotel) {
+//             const error = new Error('The hotel might have been deleted')
+//             error.statusCode = 401
+//             throw error
+//         }
+//         res.status(201).json({
+//             hotel: hotel
+//         })
+//     } catch(err) {
+//         if(!err.statusCode) {
+//             err.statusCode = 500
+//         }
+//         next(err)
+//     }
+// }
 
 exports.updateHotel = async (req, res, next) => {
     const hotelId = req.params.hotelId
@@ -91,13 +87,6 @@ exports.updateHotel = async (req, res, next) => {
     const desc = req.body.description
 
     try {
-        // check for admin privileges
-        const user = await User.findById(req.userId)
-        if(user.status !== 'admin') {
-            const error = new Error('You don\'t have admin privileges')
-            error.statusCode = 404
-            throw error
-        }
 
         const hotel = await Hotel.findById(hotelId)
         hotel.name = name
@@ -122,12 +111,12 @@ exports.removeHotel = async (req, res, next) => {
 
     try {
         // check for admin privileges
-        const user = await User.findById(req.userId)
+        /*const user = await User.findById(req.userId)
         if(user.status !== 'admin') {
             const error = new Error('You don\'t have admin privileges')
             error.statusCode = 404
             throw error
-        }
+        }*/
         const hotel = await Hotel.findById(hotelId)
         if(!hotel) {
             const error = new Error('Delete operation not possible!')

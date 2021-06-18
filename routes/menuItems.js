@@ -5,7 +5,7 @@ const isAuth = require('../middleware/auth-guard')
 
 const router = express.Router()
 
-router.get('/:hotelId', isAuth, menuController.getMenuItems)
+router.get('/', isAuth, menuController.getMenuItems)
 
 router.post('/add/:hotelId', isAuth, menuController.addMenuItem)
 
@@ -16,3 +16,5 @@ router.delete('/remove/:itemId', isAuth, menuController.deleteMenuItem)
 // router.get('/cart', menuController.getCart)
 
 module.exports = router
+
+// TODO: add back the auth middleware

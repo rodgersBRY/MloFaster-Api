@@ -18,8 +18,14 @@ const hotelSchema = new Schema({
         type: String,
         required: true
     },
-    images: {
-        type: Object,
+    // imageUrl: {
+    //     type: String,
+    //     required: true
+    // },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 })
 

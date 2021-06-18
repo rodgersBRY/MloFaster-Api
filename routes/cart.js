@@ -9,7 +9,7 @@ router.get('/', isAuth, cartController.getCart)
 
 router.post('/add/:itemId', isAuth, cartController.addItemToCart)
 
-router.post('/delete/:itemId', isAuth, cartController.removeFromCart)
+router.delete('/:itemId', isAuth, cartController.removeFromCart)
 
 router.post('/clear', isAuth, cartController.clearCart)
 

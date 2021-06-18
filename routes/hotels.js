@@ -9,10 +9,12 @@ router.get('/', hotelController.getHotels)
 
 router.post('/add', isAuth, hotelController.addHotel)
 
-router.get('/hotel/:hotelId', isAuth, hotelController.getHotel)
+// router.get('/hotel/:hotelId', isAuth, hotelController.getHotel)
 
 router.put('/hotel/:hotelId', isAuth, hotelController.updateHotel)
 
 router.delete('/delete/:hotelId', isAuth, hotelController.removeHotel)
 
 module.exports = router
+
+// TODO: DON'T FORGET TO ADD BACK THE AUTH-GUARD MIDDLEWARE TO THE ROUTES
