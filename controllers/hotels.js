@@ -26,7 +26,6 @@ exports.addHotel = async (req, res, next) => {
     // const image  = req.file
     const name = req.body.name
     const email = req.body.email
-    const desc = req.body.description
     const phoneNo = req.body.phoneNo
     
     try {
@@ -41,9 +40,8 @@ exports.addHotel = async (req, res, next) => {
             name: name,
             email: email,
             // imageUrl: image,
-            description: desc,
             userId: req.userId,
-            phoneNo: '+254 ' + phoneNo
+            phoneNo: phoneNo
         })
         const result = await hotel.save()
         res.status(201).json({
@@ -57,34 +55,12 @@ exports.addHotel = async (req, res, next) => {
     }
 }
 
-// exports.getHotel = async (req, res, next) => {
-//     const hotelId = req.params.hotelId
-
-//     try {
-//         const hotel = await Hotel.findById(hotelId)
-//         if(!hotel) {
-//             const error = new Error('The hotel might have been deleted')
-//             error.statusCode = 401
-//             throw error
-//         }
-//         res.status(201).json({
-//             hotel: hotel
-//         })
-//     } catch(err) {
-//         if(!err.statusCode) {
-//             err.statusCode = 500
-//         }
-//         next(err)
-//     }
-// }
-
 exports.updateHotel = async (req, res, next) => {
     const hotelId = req.params.hotelId
 
     const name = req.body.name
     const email = req.body.email
     const phoneNo = req.body.phoneNo
-    const desc = req.body.description
 
     try {
 
@@ -92,7 +68,6 @@ exports.updateHotel = async (req, res, next) => {
         hotel.name = name
         hotel.email = email
         hotel.phoneNo = phoneNo
-        hotel.description = desc
 
         const result = await hotel.save()
         res.status(200).json({

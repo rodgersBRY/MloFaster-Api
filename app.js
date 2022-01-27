@@ -6,7 +6,7 @@ const multer = require("multer");
 const path = require("path");
 
 // hide critical info
-require('dotenv/config')
+require("dotenv").config();
 
 // import the routes
 const authRoutes = require("./routes/auth");
