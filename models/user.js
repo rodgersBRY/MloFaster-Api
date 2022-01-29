@@ -36,6 +36,10 @@ const userSchema = new Schema({
         quantity: { type: Number, required: true },
       },
     ],
+    // total: {
+    //   type: Number,
+    //   required: true,
+    // },
   },
 });
 

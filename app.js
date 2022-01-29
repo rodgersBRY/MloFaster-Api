@@ -13,6 +13,7 @@ const authRoutes = require("./routes/auth");
 const hotelRoutes = require("./routes/hotels");
 const menuRoutes = require("./routes/menuItems");
 const cartRoutes = require("./routes/cart");
+const orderRoutes = require("./routes/orders");
 // const multerRoute = require('./routes/multer');
 
 const app = express();
@@ -57,6 +58,7 @@ app.use("/auth", authRoutes);
 app.use("/hotels", hotelRoutes);
 app.use("/menu-items", menuRoutes);
 app.use("/cart", cartRoutes);
+app.use("/orders", orderRoutes);
 // app.use('/multer', multerRoute)
 
 // error handling middleware
