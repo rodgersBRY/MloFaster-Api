@@ -34,12 +34,9 @@ const userSchema = new Schema({
         },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true },
+        dateOrdered: { type: Date, required: true },
       },
     ],
-    // total: {
-    //   type: Number,
-    //   required: true,
-    // },
   },
 });
 

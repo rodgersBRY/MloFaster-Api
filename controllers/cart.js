@@ -42,6 +42,7 @@ exports.addItemToCart = async (req, res, next) => {
         itemId: item._id,
         quantity: newQuantity,
         price: item.price,
+        dateOrdered: Date.now(),
       });
     }
     const updatedCart = {
@@ -94,4 +95,3 @@ exports.clearCart = async (req, res, next) => {
     next(err);
   }
 };
-

@@ -34,7 +34,7 @@ exports.getOrders = async (req, res, next) => {
       }
     });
     res.status(200).json({
-      msg: "sucess",
+      msg: "success",
       orders: userOrders,
     });
   } else {
@@ -68,7 +68,7 @@ exports.order = async (req, res, next) => {
     const result = await order.save();
     user.cart = { items: [] };
     await user.save();
-    res.status(200).json(result);
+    res.status(200).json({ result: result });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
