@@ -4,7 +4,6 @@ const { validationResult } = require("express-validator"); // input validator
 
 require("dotenv/config");
 
-// import user model
 const User = require("../models/user");
 
 exports.register = async (req, res, next) => {
@@ -33,7 +32,6 @@ exports.register = async (req, res, next) => {
     });
   } catch (err) {
     if (!err.statusCode) {
-      // use next() instead of throw
       err.statusCode = 500;
     }
     next(err);
@@ -46,6 +44,11 @@ exports.login = async (req, res, next) => {
 
   let loadedUser;
   try {
+    if (email == "" || password == "") {
+      const error = new Error("Fill in the fields before submitting");
+      error.statusCode = 401;
+      throw error;
+    }
     const user = await User.findOne({ email: email });
     if (!user) {
       const error = new Error("User does not exist");

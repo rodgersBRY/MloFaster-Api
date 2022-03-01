@@ -25,11 +25,11 @@ exports.checkout = async (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
   const orders = await Order.find();
 
-  const userOrders = [];
+  let userOrders = [];
 
   if (orders.length > 0) {
     orders.forEach((order) => {
-      if (order.user.userId === req.userId) {
+      if (order.user.userId == req.userId) {
         userOrders.push(order);
       }
     });
@@ -52,10 +52,12 @@ exports.order = async (req, res, next) => {
     });
     const items = user.cart.items.map((i) => {
       return {
+        name: i.name,
         quantity: i.quantity,
         item: {
           ...i.itemId._doc,
         },
+        price: totalSum,
       };
     });
     const order = new Order({

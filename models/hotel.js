@@ -14,10 +14,10 @@ const hotelSchema = new Schema({
         type: String,
         required: true
     },
-    // imageUrl: {
-    //     type: String,
-    //     required: true
-    // },
+    imagePath: {
+        type: String,
+        required: false
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
