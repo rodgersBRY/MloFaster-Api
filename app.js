@@ -5,16 +5,17 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
 
+const { imageUpload } = require("./multer");
+
 // hide critical info
 require("dotenv").config();
 
 // import the routes
+const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
+
 const hotelRoutes = require("./routes/hotels");
-const menuRoutes = require("./routes/menuItems");
-const cartRoutes = require("./routes/cart");
-const orderRoutes = require("./routes/orders");
-const { imageUpload } = require("./multer");
 
 const app = express();
 
@@ -32,10 +33,9 @@ app.use((req, res, next) => {
 
 // Add the routes
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
+app.use("/user", userRoutes);
 app.use("/hotels", hotelRoutes);
-app.use("/menu-items", menuRoutes);
-app.use("/cart", cartRoutes);
-app.use("/orders", orderRoutes);
 
 // error handling middleware
 app.use((error, req, res, next) => {

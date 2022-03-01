@@ -1,6 +1,7 @@
 const express = require("express");
 
 const hotelController = require("../controllers/hotels");
+const menuController = require("../controllers/menu-items");
 const isAuth = require("../middleware/auth-guard");
 const { imageUpload } = require("../multer");
 
@@ -8,16 +9,7 @@ const router = express.Router();
 
 router.get("/", hotelController.getHotels);
 
-router.post(
-  "/add",
-  isAuth,
-  imageUpload,
-  hotelController.addHotel,
-);
-
-router.put("/hotel/:hotelId", isAuth, hotelController.updateHotel);
-
-router.delete("/delete/:hotelId", isAuth, hotelController.removeHotel);
+router.get("/menu-items", isAuth, menuController.getMenuItems);
 
 module.exports = router;
 
