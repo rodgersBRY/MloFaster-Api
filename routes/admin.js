@@ -7,24 +7,28 @@ const { imageUpload } = require("../multer");
 
 const router = express.Router();
 
-router.post("/hotels/add", isAuth, imageUpload, hotelController.addHotel);
+router.post("/hotel/add", isAuth, imageUpload, hotelController.addHotel);
 
-router.put("/hotels/:hotelId", isAuth, hotelController.updateHotel);
+router.put("/hotel/:hotelId", isAuth, hotelController.updateHotel);
 
-router.delete("/hotels/delete/:hotelId", isAuth, hotelController.removeHotel);
+router.delete("/hotel/:hotelId", isAuth, hotelController.removeHotel);
 
-router.post("hotels/:hotelId/add-menu", isAuth, menuController.addMenuItem);
+router.post("/hotel/:hotelId/add-item", isAuth, menuController.addMenuItem);
 
 router.put(
-  "hotels/:hotelId/update-item/:itemId",
+  "/hotel/:hotelId/update-item/:itemId",
   isAuth,
   menuController.updateMenuItem
 );
 
 router.delete(
-  "hotels/:hotelId/remove/:itemId",
+  "/hotel/:hotelId/remove/:itemId",
   isAuth,
   menuController.deleteMenuItem
 );
+
+router.put("/hotel/:hotelId/update-item/:itemId", isAuth, menuController.updateMenuItem);
+
+router.delete("/hotel/:hotelId/remove-item/:itemId", isAuth, menuController.deleteMenuItem);
 
 module.exports = router;

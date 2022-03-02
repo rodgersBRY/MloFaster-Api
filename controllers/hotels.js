@@ -38,16 +38,14 @@ exports.addHotel = async (req, res, next) => {
       throw error;
     }
 
-    console.log(image);
-
     const hotel = new Hotel({
       name: name,
       email: email,
-      imagePath: image.path,
+      imagePath: null || image,
       userId: req.userId,
       phoneNo: phoneNo,
     });
-    console.log(hotel);
+    console.log(`hotels: ${hotel}`);
     const result = await hotel.save();
     res.status(201).json({
       hotel: result,
@@ -89,13 +87,6 @@ exports.removeHotel = async (req, res, next) => {
   const hotelId = req.params.hotelId;
 
   try {
-    // check for admin privileges
-    /*const user = await User.findById(req.userId)
-        if(user.status !== 'admin') {
-            const error = new Error('You don\'t have admin privileges')
-            error.statusCode = 404
-            throw error
-        }*/
     const hotel = await Hotel.findById(hotelId);
     if (!hotel) {
       const error = new Error("Delete operation not possible!");

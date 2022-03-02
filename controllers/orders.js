@@ -23,6 +23,7 @@ exports.checkout = async (req, res, next) => {
 };
 
 exports.getOrders = async (req, res, next) => {
+  const user = req.userId;
   const orders = await Order.find();
 
   let userOrders = [];
