@@ -8,9 +8,9 @@ const isAuth = require("../middleware/auth-guard");
 const router = express.Router();
 
 // order routes
-router.get("/checkout", isAuth, ordersController.checkout);
+router.post("/checkout", isAuth, ordersController.checkout);
 router.get("/orders", isAuth, ordersController.getOrders);
-router.post("/place-order", isAuth, ordersController.order);
+router.post("/order", isAuth, ordersController.order);
 
 // cart routes
 router.get("/cart", isAuth, cartController.getCart);

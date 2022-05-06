@@ -9,8 +9,6 @@ const router = express.Router();
 
 router.get("/", hotelController.getHotels);
 
-router.get("/menu-items", isAuth, menuController.getMenuItems);
+router.get("/:hotelId/menu-items", menuController.getMenuItems);
 
 module.exports = router;
-
-// TODO: DON'T FORGET TO ADD BACK THE AUTH-GUARD MIDDLEWARE TO THE ROUTES
